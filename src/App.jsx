@@ -36,7 +36,7 @@ function App() {
     if (guess === currentCard.hasBeenSeen ) {
       setScore(prevScore => {
         let newScore = prevScore + 1;
-        if (newScore === 5) { 
+        if (newScore === 12) { 
           setUserWon(true);
         } else {
           }
