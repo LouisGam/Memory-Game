@@ -36,7 +36,7 @@ function App() {
     if (guess === currentCard.hasBeenSeen ) {
       setScore(prevScore => {
         let newScore = prevScore + 1;
-        if (newScore === 12) { 
+        if (newScore === 5) { 
           setUserWon(true);
         } else {
           }
@@ -57,6 +57,18 @@ function App() {
     setCurrentCard(allCards[randomIndex]);
   }
 
+  function resetGame() {
+    setScore(0);
+    setUserWon(false);
+    setAllCards(prev => prev.map((card) => {
+      return {  
+        id:card.id,
+        filepath:card.filepath,
+        hasBeenSeen:false
+      };
+    }))
+  }
+
 
   useEffect(() => {
     //initialize the allCards state to populate with the filepaths and its initial mapped objects
@@ -72,17 +84,21 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Memory Game (Karate Images)</h1>
+      <h1>Karate Memory Game</h1>
       {currentCard && ( // Only display card if available
         <div>
           <img src={currentCard.filepath} alt="Karate Image" style={{width:'250px', height:'250px'}} />
-          <p>Guess: Have you seen this before?</p>
+          <p className="Guess">Guess: Have you seen this before?</p>
           <button onClick={() => handleGuess(true)}>Yes</button>
           <button onClick={() => handleGuess(false)}>No</button>
         </div>
       )}
-      <p>Score: {score}</p>
-      {userWon ? (<h1>You Won Good Memory!</h1>) : ""}
+      <p className="Score"> Score: {score}</p>
+      {userWon ? (
+      <div>
+        <h1>You Won Good Memory!</h1>
+        <button onClick={() => {resetGame();}}>Play Again</button>
+      </div>) : ""}
     </div>
   );
 }
